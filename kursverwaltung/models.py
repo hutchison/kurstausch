@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 class Termin(models.Model):
@@ -12,6 +12,10 @@ class Termin(models.Model):
 
     class Meta:
         db_table = 'termin'
+
+    def clean(self):
+        if self.beginn > self.ende:
+            raise ValidationError(u'Ende darf nicht vor Beginn stattfinden!')
 
     def __unicode__(self):
         return (unicode(self.datum) + u' ' + unicode(self.beginn) + u' - ' +
