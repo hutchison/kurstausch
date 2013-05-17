@@ -12,6 +12,8 @@ class Termin(models.Model):
 
     class Meta:
         db_table = 'termin'
+        verbose_name = 'Termin'
+        verbose_name_plural = 'Termine'
 
     def clean(self):
         if self.beginn > self.ende:
@@ -27,6 +29,8 @@ class Fach(models.Model):
 
     class Meta:
         db_table = 'fach'
+        verbose_name = 'Fach'
+        verbose_name_plural = u'Fächer'
 
     def __unicode__(self):
         return self.name
@@ -40,6 +44,8 @@ class Kursgruppe(models.Model):
 
     class Meta:
         db_table = 'kursgruppe'
+        verbose_name = 'Kursgruppe'
+        verbose_name_plural = u'Kursgruppen'
 
     def __unicode__(self):
         return self.thema
@@ -57,6 +63,8 @@ class Student(models.Model):
 
     class Meta:
         db_table = 'student'
+        verbose_name = 'Student'
+        verbose_name_plural = u'Studenten'
 
     def __unicode__(self):
         return (self.user.first_name + u' ' + self.user.last_name + u' ' +
