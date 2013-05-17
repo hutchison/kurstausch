@@ -53,13 +53,15 @@ class Kursgruppe(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(User)
-    matrikelnummer = models.IntegerField(unique=True)
+    matrikelnummer = models.IntegerField(unique=True, blank=True)
     belegen = models.ManyToManyField(Kursgruppe,
                                      db_table='student_belegt_kurs',
-                                     related_name='belegende_studenten')
+                                     related_name='belegende_studenten',
+                                     blank=True)
     haben_belegt = models.ManyToManyField(Kursgruppe,
                                           db_table='student_hat_kurs_belegt',
-                                          related_name='studenten_haben_belegt')
+                                          related_name='studenten_haben_belegt',
+                                          blank=True)
 
     class Meta:
         db_table = 'student'
