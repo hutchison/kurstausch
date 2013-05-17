@@ -45,26 +45,6 @@ class Kursgruppe(models.Model):
         return self.thema
 
 
-class Angebot(models.Model):
-    kursgruppe = models.OneToOneField(Kursgruppe)
-
-    class Meta:
-        db_table = 'angebot'
-
-    def __unicode__(self):
-        return unicode(self.kursgruppe)
-
-
-class Nachfrage(models.Model):
-    kursgruppe = models.OneToOneField(Kursgruppe)
-
-    class Meta:
-        db_table = 'nachfrage'
-
-    def __unicode__(self):
-        return unicode(self.kursgruppe)
-
-
 class Student(models.Model):
     user = models.OneToOneField(User)
     matrikelnummer = models.IntegerField(unique=True)
@@ -81,17 +61,3 @@ class Student(models.Model):
     def __unicode__(self):
         return (self.user.first_name + u' ' + self.user.last_name + u' ' +
                 unicode(self.matrikelnummer))
-
-
-class Tausch(models.Model):
-    student = models.ForeignKey(Student)
-    angebot = models.ForeignKey(Angebot)
-    nachfrage = models.ForeignKey(Nachfrage)
-
-    class Meta:
-        db_table = 'tausch'
-        unique_together = ('student', 'angebot', 'nachfrage')
-
-    def __unicode__(self):
-        return (unicode(self.student) + u' hat ' + unicode(self.angebot) +
-                u' und möchte ' + unicode(self.nachfrage))
