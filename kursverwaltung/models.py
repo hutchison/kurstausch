@@ -14,6 +14,7 @@ class Termin(models.Model):
         db_table = 'termin'
         verbose_name = 'Termin'
         verbose_name_plural = 'Termine'
+        unique_together = ('datum', 'beginn', 'ende')
 
     def clean(self):
         if self.beginn > self.ende:
