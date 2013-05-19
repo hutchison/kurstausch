@@ -20,6 +20,17 @@ class Termin(models.Model):
         if self.beginn > self.ende:
             raise ValidationError(u'Ende darf nicht vor Beginn stattfinden!')
 
+    @property
+    def semester(self):
+        if 1 <= self.datum.month <= 3:
+            return ('WS ' + str(self.datum.year - 1) + ' ' +
+                    str(self.datum.year))
+        elif 4 <= self.datum.month <= 9:
+            return 'SS ' + str(self.datum.year)
+        elif 10 <= self.datum.month <= 12:
+            return ('WS ' + str(self.datum.year) + ' ' +
+                    str(self.datum.year + 1))
+
     def __unicode__(self):
         return (unicode(self.datum) + u' ' + unicode(self.beginn) + u' - ' +
                 unicode(self.ende))
