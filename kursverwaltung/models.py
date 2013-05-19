@@ -70,10 +70,11 @@ class Student(models.Model):
                                      db_table='student_belegt_kurs',
                                      related_name='belegende_studenten',
                                      blank=True)
-    haben_belegt = models.ManyToManyField(Kursgruppe,
-                                          db_table='student_hat_kurs_belegt',
-                                          related_name='studenten_haben_belegt',
-                                          blank=True)
+    haben_belegt = models.ManyToManyField(
+        Kursgruppe,
+        db_table='student_hat_kurs_belegt',
+        related_name='studenten_haben_belegt',
+        blank=True)
 
     class Meta:
         db_table = 'student'
