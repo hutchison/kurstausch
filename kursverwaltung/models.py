@@ -60,7 +60,7 @@ class Kursgruppe(models.Model):
         verbose_name_plural = u'Kursgruppen'
 
     def __unicode__(self):
-        return self.thema
+        return '[' + unicode(self.fach) + '] ' + self.thema
 
 
 class Student(models.Model):
