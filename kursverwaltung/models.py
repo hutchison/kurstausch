@@ -37,7 +37,7 @@ class Termin(models.Model):
 
 
 class Fach(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
 
     class Meta:
         db_table = 'fach'
