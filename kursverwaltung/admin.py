@@ -26,6 +26,11 @@ class StudentsUserAdmin(AuthUserAdmin):
     inlines = [StudentInline]
 
 
+class BelegendeStudentenInline(admin.StackedInline):
+    model = Student.belegen.through
+    extra = 1
+
+
 class KursgruppeInline(admin.StackedInline):
     model = Kursgruppe
     can_delete = False
@@ -37,11 +42,19 @@ class FachAdmin(admin.ModelAdmin):
 
 
 class KursgruppenAdmin(admin.ModelAdmin):
-    list_display = ('thema', 'fach', 'max_tn')
+    list_display = ('thema', 'fach', 'max_tn', 'num_tn', 'is_full')
+    inlines = [BelegendeStudentenInline]
+    search_fields = ['thema', 'fach__name']
+
+
+class StattfindendeKursgruppenInline(admin.StackedInline):
+    model = Kursgruppe.termine.through
+    extra = 1
 
 
 class TerminAdmin(admin.ModelAdmin):
     list_display = ('datum', 'beginn', 'ende', 'semester')
+    inlines = [StattfindendeKursgruppenInline]
 
 
 admin.site.unregister(User)
