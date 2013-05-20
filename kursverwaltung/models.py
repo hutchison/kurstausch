@@ -59,6 +59,14 @@ class Kursgruppe(models.Model):
         verbose_name = 'Kursgruppe'
         verbose_name_plural = u'Kursgruppen'
 
+    @property
+    def num_tn(self):
+        return self.belegende_studenten.count()
+
+    @property
+    def is_full(self):
+        return self.belegende_studenten.count() >= self.max_tn
+
     def __unicode__(self):
         return '[' + unicode(self.fach) + '] ' + self.thema
 
