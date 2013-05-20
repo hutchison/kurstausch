@@ -2,11 +2,11 @@
 
 from django.test import TestCase
 from django.contrib.auth.models import User
-from models import Student, Termin
+from models import Student, Termin, Fach
 
 import datetime
 
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 
 
@@ -232,14 +232,33 @@ class TerminTests(TestCase):
             'SS 2013'
         )
 
-    def test_incorrect_termin(self):
+    def test_create_incorrect_termin(self):
         """
-        Testet, ob falsche Termine möglich sind.
+        Unmögliche Termine sollten nicht erstellt werden können.
         """
         self.assertRaises(
-            ValidationError,
+            IntegrityError,
             Termin.objects.create,
-            datum=datetime.date(2013, 1, 1),
-            beginn=datetime.time(13, 0),
-            ende=datetime.time(11, 0)
+            datum=datetime.date.today(),
+            beginn=datetime.time(13,0),
+            ende=datetime.time(11,0)
+        )
+
+
+class FachTest(TestCase):
+    def setUp(self):
+        Fach.objects.create(name='Onkologie')
+        Fach.objects.create(name='Kinderheilkunde')
+        Fach.objects.create(name='Chirurgie')
+
+    def test_create_new_fach(self):
+        f = Fach.objects.create(name='Innere Medizin')
+
+        self.assertEqual(f, Fach.objects.get(name='Innere Medizin'))
+
+    def test_create_already_existing_fach(self):
+        self.assertRaises(
+            IntegrityError,
+            Fach.objects.create,
+            name='Onkologie'
         )
