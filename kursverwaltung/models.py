@@ -59,6 +59,13 @@ class Kursgruppe(models.Model):
         verbose_name = 'Kursgruppe'
         verbose_name_plural = u'Kursgruppen'
 
+    def clean(self):
+        try:
+            if self.belegende_studenten.count() >= self.max_tn:
+                raise ValidationError(self.thema + ' ist voll.')
+        except ValueError:
+            pass
+
     @property
     def num_tn(self):
         return self.belegende_studenten.count()
