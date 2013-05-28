@@ -53,6 +53,7 @@ class Kursgruppe(models.Model):
     max_tn = models.IntegerField()
     fach = models.ForeignKey(Fach)
     termine = models.ManyToManyField(Termin, db_table='findet_statt_an')
+    schliesst_aus = models.ManyToManyField('self', db_table='schliesst_aus')
 
     class Meta:
         db_table = 'kursgruppe'
